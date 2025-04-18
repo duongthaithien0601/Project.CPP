@@ -177,6 +177,20 @@ bool docDuLieuTuFile(const string& userFileName, const string& walletFileName) {
     return true;
 }
 
+// Tai du lieu, thu tu file chinh, neu that bai thi tu file sao luu
+void taiDuLieu() {
+    if (!docDuLieuTuFile("users.txt", "wallets.txt")) {
+        cout << "Dang thu tai tu ban sao luu...\n";
+        if (!docDuLieuTuFile("backup_users.txt", "backup_wallets.txt")) {
+            cout << "File sao luu khong tim thay. Bat dau moi.\n";
+        } else {
+            cout << "Du lieu da duoc tai tu ban sao luu.\n";
+        }
+    } else {
+        cout << "Du lieu da duoc tai thanh cong.\n";
+    }
+}
+
 
 
 
