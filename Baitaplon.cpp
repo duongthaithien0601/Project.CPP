@@ -321,6 +321,51 @@ void capNhatThongTin(string username) {
     cout << "Thong tin da duoc cap nhat!\n";
 }
 
+// Cap nhat thong tin boi quan ly (gui OTP xac nhan den chu tai khoan)
+void capNhatThongTinBoiQuanLy(string manager, string targetUser) {
+    if (!users[manager].isManager) {
+        cout << "Chi quan ly moi co the cap nhat thong tin!\n";
+        return;
+    }
+
+    auto it = users.find(targetUser);
+    if (it == users.end()) {
+        cout << "Nguoi dung muc tieu khong tim thay!\n";
+        return;
+    }
+
+    // Quan ly nhap thong tin moi
+    string newName, newEmail;
+    cout << "Nhap ho ten moi cho " << targetUser << ": ";
+    cin.ignore();
+    getline(cin, newName);
+    cout << "Nhap email moi cho " << targetUser << ": ";
+    cin >> newEmail;
+
+    // Hien thi thong tin thay doi de xac nhan
+    cout << "\nThay doi de xuat cho " << targetUser << ":\n";
+    cout << "Ho ten moi: " << newName << "\n";
+    cout << "Email moi: " << newEmail << "\n";
+
+    // Gui OTP den chu tai khoan (mo phong bang cach yeu cau nhap OTP)
+    string otp = sinhOTP();
+    cout << "OTP gui den " << targetUser << ": " << otp << "\n";
+    cout << "Vui long yeu cau " << targetUser << " nhap OTP de xac nhan: ";
+    string enteredOtp;
+    cin >> enteredOtp;
+
+    if (enteredOtp != otp) {
+        cout << "OTP khong hop le! Cap nhat bi huy.\n";
+        return;
+    }
+
+    // Cap nhat thong tin neu OTP hop le
+    it->second.fullName = newName;
+    it->second.email = newEmail;
+    luuDuLieu();
+    cout << "Thong tin nguoi dung da duoc cap nhat boi quan ly va xac nhan boi " << targetUser << "!\n";
+}
+
 
 
 
