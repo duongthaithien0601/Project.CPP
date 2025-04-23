@@ -295,6 +295,32 @@ void doiMatKhau(string username) {
     cout << "Doi mat khau thanh cong!\n";
 }
 
+// Cap nhat thong tin ca nhan (nguoi dung tu cap nhat)
+void capNhatThongTin(string username) {
+    auto it = users.find(username);
+    if (it == users.end()) return;
+
+    string newName, newEmail, otp = sinhOTP();
+    cout << "OTP cap nhat thong tin: " << otp << "\nNhap OTP: ";
+    string enteredOtp;
+    cin >> enteredOtp;
+
+    if (enteredOtp != otp) {
+        cout << "OTP khong hop le!\n";
+        return;
+    }
+
+    cout << "Nhap ho ten moi: ";
+    cin.ignore();
+    getline(cin, newName);
+    cout << "Nhap email moi: ";
+    cin >> newEmail;
+    it->second.fullName = newName;
+    it->second.email = newEmail;
+    luuDuLieu();
+    cout << "Thong tin da duoc cap nhat!\n";
+}
+
 
 
 
