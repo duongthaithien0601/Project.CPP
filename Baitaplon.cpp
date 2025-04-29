@@ -366,6 +366,104 @@ void capNhatThongTinBoiQuanLy(string manager, string targetUser) {
     cout << "Thong tin nguoi dung da duoc cap nhat boi quan ly va xac nhan boi " << targetUser << "!\n";
 }
 
+// Nap diem (10 do = 1 diem)
+void napDiem(string username) {
+    auto it = users.find(username);
+    if (it == users.end()) {
+        cout << "Nguoi dung khong tim thay!\n";
+        return;
+    }
+
+    int walletId = it->second.walletId;
+    auto walletIt = wallets.find(walletId);
+    if (walletIt == wallets.end()) {
+        cout << "Vi khong tim thay!\n";
+        return;
+    }
+
+    double dollars;
+    cout << "Nhap so tien nap (tinh bang do, 10 do = 1 diem): ";
+    if (!(cin >> dollars)) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "So tien khong hop le!\n";
+        return;
+    }
+
+    if (dollars <= 0) {
+        cout << "So tien phai lon hon 0!\n";
+        return;
+    }
+
+    string otp = sinhOTP();
+    cout << "OTP nap diem: " << otp << "\nNhap OTP: ";
+    string enteredOtp;
+    cin >> enteredOtp;
+
+    if (enteredOtp != otp) {
+        cout << "OTP khong hop le! Nap diem bi huy.\n";
+        return;
+    }
+
+    int points = static_cast<int>(dollars / DOLLARS_PER_POINT);
+    if (points == 0) {
+        cout << "So tien qua nho de quy doi thanh diem (toi thieu 10 do)!\n";
+        return;
+    }
+
+    Wallet& wallet = walletIt->second;
+    wallet.balance += points;
+    string log = "Nap " + to_string(points) + " diem (" + to_string(dollars) + " do) luc " + to_string(time(0));
+    wallet.transactionLog.push_back(log);
+    luuDuLieu();
+    cout << "Nap thanh cong " << points << " diem!\n";
+}
+
+// Chuyen diem
+void chuyenDiem(string fromUser, string toUser, int amount) {
+    auto sender = users.find(fromUser);
+    auto receiver = users.find(toUser);
+    if (sender == users.end() || receiver == users.end()) {
+        cout << "Nguoi dung khong ton tai!\n";
+        return;
+    }
+
+    int fromWalletId = sender->second.walletId;
+    int toWalletId = receiver->second.walletId;
+
+    auto walletAIt = wallets.find(fromWalletId);
+    auto walletBIt = wallets.find(toWalletId);
+    if (walletAIt == wallets.end() || walletBIt == wallets.end()) {
+        cout << "Vi khong tim thay! Du lieu khong dong nhat.\n";
+        return;
+    }
+
+    Wallet& walletA = walletAIt->second;
+    Wallet& walletB = walletBIt->second;
+
+    if (walletA.balance < amount) {
+        cout << "So du khong du!\n";
+        return;
+    }
+
+    string otp = sinhOTP();
+    cout << "OTP giao dich: " << otp << "\nNhap OTP: ";
+    string enteredOtp;
+    cin >> enteredOtp;
+
+    if (enteredOtp != otp) {
+        cout << "OTP khong hop le! Giao dich bi huy.\n";
+        return;
+    }
+
+    walletA.balance -= amount;
+    walletB.balance += amount;
+    string log = "Chuyen " + to_string(amount) + " tu " + fromUser + " den " + toUser + " luc " + to_string(time(0));
+    walletA.transactionLog.push_back(log);
+    walletB.transactionLog.push_back(log);
+    luuDuLieu();
+    cout << "Giao dich thanh cong!\n";
+}
 
 
 
