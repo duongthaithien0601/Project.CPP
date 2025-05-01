@@ -465,7 +465,26 @@ void chuyenDiem(string fromUser, string toUser, int amount) {
     cout << "Giao dich thanh cong!\n";
 }
 
-
+// Bao cao vi
+void xemVi(string username) {
+    auto it = users.find(username);
+    if (it == users.end()) {
+        cout << "Nguoi dung khong tim thay!\n";
+        return;
+    }
+    auto walletIt = wallets.find(it->second.walletId);
+    if (walletIt == wallets.end()) {
+        cout << "Vi khong tim thay!\n";
+        return;
+    }
+    Wallet& wallet = walletIt->second;
+    cout << "ID Vi: " << wallet.walletId << "\n";
+    cout << "So du: " << wallet.balance << " diem (" << (wallet.balance * DOLLARS_PER_POINT) << " do)\n";
+    cout << "Lich su giao dich:\n";
+    for (const auto& log : wallet.transactionLog) {
+        cout << log << "\n";
+    }
+}
 
 
 
