@@ -486,39 +486,22 @@ void xemVi(string username) {
     }
 }
 
+// Hien thi danh sach nguoi dung (danh cho quan ly)
+void xemDanhSachNguoiDung(string manager) {
+    if (!users[manager].isManager) {
+        cout << "Chi quan ly moi co the xem danh sach nguoi dung!\n";
+        return;
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    cout << "\nDanh sach nguoi dung:\n";
+    cout << "----------------------------------------\n";
+    for (const auto& pair : users) {
+        const User& user = pair.second;
+        cout << "Ten dang nhap: " << user.username << "\n";
+        cout << "Ho ten: " << user.fullName << "\n";
+        cout << "Email: " << user.email << "\n";
+        cout << "ID Vi: " << user.walletId << "\n";
+        cout << "La quan ly: " << (user.isManager ? "Co" : "Khong") << "\n";
+        cout << "----------------------------------------\n";
+    }
+}
