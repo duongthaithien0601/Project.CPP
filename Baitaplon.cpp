@@ -505,3 +505,111 @@ void xemDanhSachNguoiDung(string manager) {
         cout << "----------------------------------------\n";
     }
 }
+
+// Chuong trinh chinh
+int main() {
+    taiDuLieu();
+
+    if (wallets.empty()) {
+        wallets.emplace(0, Wallet(0, 10000));
+        users.emplace("admin", User("admin", hashPassword("admin@123"), "Quan Ly", "admin@example.com", 0, true));
+        luuDuLieu();
+    }
+
+    string nguoiDungDangNhap;
+    int luaChon;
+    while (true) {
+        cout << "\n1. Dang ky\n2. Dang nhap\n3. Doi mat khau\n4. Cap nhat thong tin\n5. Chuyen diem\n6. Xem vi\n7. Dang ky boi quan ly\n8. Xem danh sach nguoi dung (Quan ly)\n9. Cap nhat thong tin boi quan ly\n10. Nap diem\n11. Thoat\nLua chon: ";
+        if (!(cin >> luaChon)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Nhap sai! Vui long nhap so.\n";
+            continue;
+        }
+
+        switch (luaChon) {
+            case 1:
+                dangKy();
+                break;
+            case 2:
+                dangNhap(nguoiDungDangNhap);
+                break;
+            case 3:
+                if (!nguoiDungDangNhap.empty()) {
+                    doiMatKhau(nguoiDungDangNhap);
+                } else {
+                    cout << "Vui long dang nhap truoc!\n";
+                }
+                break;
+            case 4:
+                if (!nguoiDungDangNhap.empty()) {
+                    capNhatThongTin(nguoiDungDangNhap);
+                } else {
+                    cout << "Vui long dang nhap truoc!\n";
+                }
+                break;
+            case 5:
+                if (!nguoiDungDangNhap.empty()) {
+                    string toUser;
+                    int amount;
+                    cout << "Nhap ten nguoi nhan: ";
+                    cin >> toUser;
+                    cout << "Nhap so diem: ";
+                    if (!(cin >> amount)) {
+                        cin.clear();
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                        cout << "So diem khong hop le!\n";
+                        break;
+                    }
+                    chuyenDiem(nguoiDungDangNhap, toUser, amount);
+                } else {
+                    cout << "Vui long dang nhap truoc!\n";
+                }
+                break;
+            case 6:
+                if (!nguoiDungDangNhap.empty()) {
+                    xemVi(nguoiDungDangNhap);
+                } else {
+                    cout << "Vui long dang nhap truoc!\n";
+                }
+                break;
+            case 7:
+                if (!nguoiDungDangNhap.empty() && users[nguoiDungDangNhap].isManager) {
+                    dangKy(true);
+                } else {
+                    cout << "Chi quan ly moi co the dang ky nguoi dung!\n";
+                }
+                break;
+            case 8:
+                if (!nguoiDungDangNhap.empty()) {
+                    xemDanhSachNguoiDung(nguoiDungDangNhap);
+                } else {
+                    cout << "Vui long dang nhap truoc!\n";
+                }
+                break;
+            case 9:
+                if (!nguoiDungDangNhap.empty() && users[nguoiDungDangNhap].isManager) {
+                    string targetUser;
+                    cout << "Nhap ten dang nhap can cap nhat: ";
+                    cin >> targetUser;
+                    capNhatThongTinBoiQuanLy(nguoiDungDangNhap, targetUser);
+                } else {
+                    cout << "Chi quan ly moi co the cap nhat thong tin!\n";
+                }
+                break;
+            case 10:
+                if (!nguoiDungDangNhap.empty()) {
+                    napDiem(nguoiDungDangNhap);
+                } else {
+                    cout << "Vui long dang nhap truoc!\n";
+                }
+                break;
+            case 11:
+                cout << "Thoat...\n";
+                return 0;
+            default:
+                cout << "Lua chon khong hop le!\n";
+        }
+    }
+    return 0;
+}
