@@ -21,7 +21,7 @@ thông qua xác thực OTP và mã hóa mật khẩu cơ bản.
      - Thiết kế cấu trúc cốt lõi của hệ thống, bao gồm định nghĩa các lớp Wallet và User.
      - Lập trình chức năng đăng ký tài khoản, bao gồm xác thực OTP và tạo tài khoản mới.
      - Tham gia phát triển chức năng chuyển điểm, bao gồm kiểm tra người dùng và ví.
-     - Quản lý nhóm, phân công công việc, và kiểm tra chất lượng mã nguồn.
+     - Quản lý nhóm, phân công công việc.
 
 2. **Họ tên**: Thái Tuấn Vũ
    - **Vai trò**: Lập trình viên
@@ -29,13 +29,15 @@ thông qua xác thực OTP và mã hóa mật khẩu cơ bản.
      - Triển khai lưu trữ dữ liệu vào các tệp users.txt, wallets.txt và sao lưu vào backup_users.txt, backup_wallets.txt.
      - Lập trình chức năng đăng nhập, đổi mật khẩu và một phần của cập nhật thông tin cá nhân.
      - Hoàn thiện chức năng chuyển điểm, xem báo cáo ví, và xem danh sách người dùng dành cho quản lý.
-
+     - Viết báo cáo dự án.
+       
 3. **Họ tên**: Phan Nguyễn Tiến Vỹ
    - **Vai trò**: Lập trình viên
    - **Công việc thực hiện**:
      - Phát triển các hàm tiện ích bảo mật: mã hóa mật khẩu, sinh mật khẩu ngẫu nhiên, và sinh OTP.
      - Triển khai hàm tải dữ liệu từ tệp chính hoặc tệp sao lưu.
      - Lập trình chức năng nạp điểm, bao gồm xử lý quy đổi tiền và xác thực OTP.
+     - Kiểm tra chất lượng mã nguồn.
 
 ## III. Đặc tả chức năng
 
