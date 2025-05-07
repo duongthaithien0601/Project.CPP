@@ -153,8 +153,6 @@ Khi khởi chạy chương trình, hệ thống tải dữ liệu từ users.txt
      - Tạo bản sao lưu vào backup_users.txt, backup_wallets.txt bằng lệnh hệ thống (copy trên Windows, cp trên Unix).
 
 ## VII. Sơ đồ mô tả cách chương trình hoạt động
-![Logo](https://raw.githubusercontent.com/duongthaithien0601/Project.CPP/blob/main/logo.png)
-
 
 ```
                     +-------------------+
