@@ -198,7 +198,64 @@ Khi khởi chạy chương trình, hệ thống tải dữ liệu từ users.txt
 
 ## VIII. Tài liệu tham khảo
 
-- Tài liệu C++ từ trang [cppreference.com](https://en.cppreference.com/w/).
-- Diễn đàn thảo luận [StackOverflow](https://stackoverflow.com/).
-- Trang tài liệu học lập trình: [GeeksforGeeks](https://www.geeksforgeeks.org/cpp-programming-language/).
-- Tài liệu về quản lý tệp và bảo mật trong C++: [cplusplus.com](https://www.cplusplus.com/).
+### A. Tài liệu về ngôn ngữ lập trình C++
+- **C++ Reference Documentation**: [cppreference.com](https://en.cppreference.com/w/) - Tài liệu tham khảo đầy đủ về C++
+- **The C++ Programming Language**: Bjarne Stroustrup - Sách chính thức về C++ từ tác giả ngôn ngữ
+- **Effective C++**: Scott Meyers - Hướng dẫn viết code C++ hiệu quả
+- **C++ Primer**: Stanley Lippman, Josée Lajoie, Barbara Moo - Sách học C++ từ cơ bản đến nâng cao
+- **GeeksforGeeks C++**: [geeksforgeeks.org/cpp-programming-language](https://www.geeksforgeeks.org/cpp-programming-language/) - Hướng dẫn và ví dụ C++
+- **Cplusplus.com**: [cplusplus.com](https://www.cplusplus.com/) - Tài liệu và hướng dẫn C++
+
+### B. Tài liệu về thư viện và API
+- **libcurl Documentation**: [curl.se/libcurl](https://curl.se/libcurl/) - Tài liệu chính thức của thư viện libcurl
+- **CURL Programming Tutorial**: [curl.se/libcurl/c](https://curl.se/libcurl/c/) - Hướng dẫn lập trình với libcurl
+- **C++ Standard Library Reference**: [cplusplus.com/reference](https://cplusplus.com/reference/) - Tài liệu thư viện chuẩn C++
+- **File I/O in C++**: [cplusplus.com/doc/tutorial/files](https://cplusplus.com/doc/tutorial/files/) - Hướng dẫn xử lý file
+
+### C. Tài liệu về bảo mật và mã hóa
+- **Cryptography Engineering**: Niels Ferguson, Bruce Schneier, Tadayoshi Kohno - Thiết kế hệ thống mật mã
+- **Hash Functions and Security**: [nist.gov](https://www.nist.gov/publications) - Tài liệu về hàm băm từ NIST
+
+### D. Tài liệu về email và SMTP
+- **SMTP Protocol RFC 5321**: [tools.ietf.org/rfc/rfc5321.txt](https://tools.ietf.org/rfc/rfc5321.txt) - Giao thức SMTP chính thức
+- **Gmail API Documentation**: [developers.google.com/gmail/api](https://developers.google.com/gmail/api) - Tài liệu Gmail API
+- **Email Security Best Practices**: [mailgun.com/blog/email-security](https://www.mailgun.com/blog/email-security/) - Bảo mật email
+- **MIME Types RFC 2046**: [tools.ietf.org/rfc/rfc2046.txt](https://tools.ietf.org/rfc/rfc2046.txt) - Định dạng email MIME
+
+### E. Tài liệu về quản lý dữ liệu và file
+- **File System Design**: Operating System Concepts - Abraham Silberschatz - Quản lý hệ thống file
+- **Data Structures and Algorithms in C++**: Michael Goodrich - Cấu trúc dữ liệu
+- **JSON for Modern C++**: [github.com/nlohmann/json](https://github.com/nlohmann/json) - Thư viện JSON cho C++
+
+### F. Tài liệu về OTP và xác thực hai yếu tố
+- **RFC 4226 - HOTP Algorithm**: [tools.ietf.org/rfc/rfc4226.txt](https://tools.ietf.org/rfc/rfc4226.txt) - Thuật toán HOTP
+- **RFC 6238 - TOTP Algorithm**: [tools.ietf.org/rfc/rfc6238.txt](https://tools.ietf.org/rfc/rfc6238.txt) - Thuật toán TOTP
+- **Two-Factor Authentication**: David Aspinall, Mike Just - Xác thực hai yếu tố
+- **NIST Special Publication 800-63B**: [nvlpubs.nist.gov](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-63b.pdf) - Hướng dẫn xác thực điện tử
+
+### H. Tài liệu về hệ thống thanh toán điện tử
+- **Digital Payment Systems**: Donal O'Mahony, Michael Peirce, Hitesh Tewari - Hệ thống thanh toán số
+- **Payment Card Industry Data Security Standard (PCI DSS)**: [pcisecuritystandards.org](https://www.pcisecuritystandards.org/) - Tiêu chuẩn bảo mật thanh toán
+
+### J. Diễn đàn và cộng đồng
+- **Stack Overflow**: [stackoverflow.com](https://stackoverflow.com/) - Diễn đàn hỏi đáp lập trình
+- **Reddit r/cpp**: [reddit.com/r/cpp](https://www.reddit.com/r/cpp/) - Cộng đồng C++
+- **C++ Users Group**: [isocpp.org](https://isocpp.org/) - Tổ chức tiêu chuẩn C++
+- **GitHub**: [github.com](https://github.com/) - Kho mã nguồn mở
+- **Dev.to C++ Community**: [dev.to/t/cpp](https://dev.to/t/cpp) - Cộng đồng chia sẻ kiến thức
+
+### K. Công cụ phát triển
+- **Visual Studio Code**: [code.visualstudio.com](https://code.visualstudio.com/) - IDE miễn phí
+- **Code::Blocks**: [codeblocks.org](https://www.codeblocks.org/) - IDE C++ miễn phí
+- **CLion**: [jetbrains.com/clion](https://www.jetbrains.com/clion/) - IDE C++ chuyên nghiệp
+- **GDB Documentation**: [gnu.org/software/gdb](https://www.gnu.org/software/gdb/) - GNU Debugger
+- **CMake**: [cmake.org](https://cmake.org/) - Hệ thống build cross-platform
+
+### L. Tài liệu về deployment và quản lý môi trường
+- **MSYS2 Documentation**: [msys2.org](https://www.msys2.org/) - Môi trường phát triển Windows
+- **MinGW-w64**: [mingw-w64.org](https://www.mingw-w64.org/) - Trình biên dịch Windows
+- **Docker for C++**: [docker.com](https://www.docker.com/) - Container hóa ứng dụng
+- **Linux System Programming**: Robert Love - Lập trình hệ thống Linux
+
+
+
