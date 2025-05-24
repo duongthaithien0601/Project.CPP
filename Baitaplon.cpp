@@ -241,7 +241,7 @@ void doiMatKhau(string username);
 void capNhatThongTinBoiQuanLy(string manager, string targetUser);
 void napDiem(string username);
 
-/// Đăng ký
+// Dang ky
 void dangKy(bool byManager = false) {
     string username, password, fullName, email;
     cout << "Nhap ten dang nhap: "; cin >> username;
@@ -255,7 +255,7 @@ void dangKy(bool byManager = false) {
         cout << "Nhap mat khau: "; cin >> password;
     }
     string otp = sinhOTP();
-    // ======= [Line ~95-103] Sửa phần in OTP thành gửi mail =======
+    
     cout << "Dang gui OTP dang ky toi email " << email << "...\n";
     if (!sendOTP(email, otp)) {
         cout << "Khong the gui OTP. Vui long thu lai.\n";
@@ -263,8 +263,7 @@ void dangKy(bool byManager = false) {
     }
     cout << "Nhap ma OTP: "; string entered; cin >> entered;
     if (entered != otp) { cout << "OTP khong hop le! Dang ky that bai.\n"; return; }
-    // =============================================================
-
+    
     int wid = wallets.size();
     users[username] = User(username, hashPassword(password), fullName, email, wid, byManager);
     wallets[wid] = Wallet(wid);
@@ -272,12 +271,12 @@ void dangKy(bool byManager = false) {
     cout << "Dang ky thanh cong!\n";
 }
 
-// Đăng nhập
+// DAng nhap
 bool dangNhap(string &loggedUser) {
     string username, password;
     cout << "Nhap ten dang nhap: "; cin >> username;
     cout << "Nhap mat khau: "; cin >> password;
-// === Bypass admin login ===
+
     if (username == "admin" && password == "admin@123") {
         loggedUser = username;
         cout << "Dang nhap admin thanh cong (khong can OTP)!\n";
@@ -286,7 +285,7 @@ bool dangNhap(string &loggedUser) {
     if (!users.count(username) || users[username].passwordHash != hashPassword(password)) {
         cout << "Sai ten hoac mat khau!\n"; return false; }
     string otp = sinhOTP();
-    // ======= [Line ~130-138] Sửa phần in OTP thành gửi mail =======
+   
     cout << "Dang gui OTP dang nhap toi email " << users[username].email << "...\n";
     if (!sendOTP(users[username].email, otp)) {
         cout << "Khong the gui OTP. Vui long thu lai.\n";
@@ -294,7 +293,7 @@ bool dangNhap(string &loggedUser) {
     }
     cout << "Nhap ma OTP: "; string entered; cin >> entered;
     if (entered != otp) { cout << "OTP khong hop le! Dang nhap that bai.\n"; return false; }
-    // =============================================================
+    
     loggedUser = username;
     cout << "Dang nhap thanh cong!\n";
     return true;
