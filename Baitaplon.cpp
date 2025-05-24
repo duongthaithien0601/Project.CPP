@@ -76,13 +76,13 @@ static size_t payload_reader(char *buffer, size_t size, size_t nitems, void *use
     return toCopy;
 }
 
-// Gửi OTP qua Gmail SMTP
+// Gui OTP qua Gmail SMTP
 bool sendOTP(const string &to, const string &otp) {
     CURL *curl = curl_easy_init();
     if (!curl) return false;
 
-    const string from = "tuanvu26062006@gmail.com";  // đổi thành email bạn
-    const string pass = "edawqedbzmuldaxe";         // đổi thành App Password 16 ký tự
+    const string from = "tuanvu26062006@gmail.com";  
+    const string pass = "edawqedbzmuldaxe";         
 
     string msg =
         "To: <" + to   + ">\r\n"
@@ -255,7 +255,7 @@ void dangKy(bool byManager = false) {
         cout << "Nhap mat khau: "; cin >> password;
     }
     string otp = sinhOTP();
-    
+    // Gui OTP den email
     cout << "Dang gui OTP dang ky toi email " << email << "...\n";
     if (!sendOTP(email, otp)) {
         cout << "Khong the gui OTP. Vui long thu lai.\n";
@@ -263,7 +263,7 @@ void dangKy(bool byManager = false) {
     }
     cout << "Nhap ma OTP: "; string entered; cin >> entered;
     if (entered != otp) { cout << "OTP khong hop le! Dang ky that bai.\n"; return; }
-    
+    // =============================================================
     int wid = wallets.size();
     users[username] = User(username, hashPassword(password), fullName, email, wid, byManager);
     wallets[wid] = Wallet(wid);
@@ -271,12 +271,12 @@ void dangKy(bool byManager = false) {
     cout << "Dang ky thanh cong!\n";
 }
 
-// DAng nhap
+// Dang nhap
 bool dangNhap(string &loggedUser) {
     string username, password;
     cout << "Nhap ten dang nhap: "; cin >> username;
     cout << "Nhap mat khau: "; cin >> password;
-
+    // Dang nhap duoi quyen admin thi khong can OTP
     if (username == "admin" && password == "admin@123") {
         loggedUser = username;
         cout << "Dang nhap admin thanh cong (khong can OTP)!\n";
@@ -285,7 +285,7 @@ bool dangNhap(string &loggedUser) {
     if (!users.count(username) || users[username].passwordHash != hashPassword(password)) {
         cout << "Sai ten hoac mat khau!\n"; return false; }
     string otp = sinhOTP();
-   
+    // Gui OTP den email
     cout << "Dang gui OTP dang nhap toi email " << users[username].email << "...\n";
     if (!sendOTP(users[username].email, otp)) {
         cout << "Khong the gui OTP. Vui long thu lai.\n";
@@ -293,7 +293,7 @@ bool dangNhap(string &loggedUser) {
     }
     cout << "Nhap ma OTP: "; string entered; cin >> entered;
     if (entered != otp) { cout << "OTP khong hop le! Dang nhap that bai.\n"; return false; }
-    
+    // =============================================================
     loggedUser = username;
     cout << "Dang nhap thanh cong!\n";
     return true;
@@ -372,7 +372,7 @@ cout << "Nhap OTP: ";
     cout << "Thong tin da duoc cap nhat!\n";
 }
 
-// Cap nhat thong tin boi quan ly (gui OTP xac nhan den chu tai khoan)
+// Cap nhat thong tin boi quan ly 
 void capNhatThongTinBoiQuanLy(string manager, string targetUser) {
     if (!users[manager].isManager) {
         cout << "Chi quan ly moi co the cap nhat thong tin!\n";
@@ -398,7 +398,7 @@ void capNhatThongTinBoiQuanLy(string manager, string targetUser) {
     cout << "Ho ten moi: " << newName << "\n";
     cout << "Email moi: " << newEmail << "\n";
 
-    // Gui OTP den chu tai khoan (mo phong bang cach yeu cau nhap OTP)
+    // Gui OTP den chu tai khoan 
     string otp = sinhOTP();
     cout << "Dang gui OTP cap nhat thong tin toi email " << it->second.email << "...\n";
     if (!sendOTP(it->second.email, otp)) {
