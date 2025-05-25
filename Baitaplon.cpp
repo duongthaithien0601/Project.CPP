@@ -1,5 +1,4 @@
 #include<bits/stdc++.h>
-
 #include <curl/curl.h>
 using namespace std;
 
@@ -40,7 +39,7 @@ public:
 unordered_map<string, User> users;
 unordered_map<int, Wallet> wallets;
 
-// Ham bam mat khau (gia lap voi salt don gian)
+// Ham bam mat khau 
 string hashPassword(string password) {
     hash<string> hasher;
     string salt = "simpleSalt123";
@@ -255,7 +254,8 @@ void dangKy(bool byManager = false) {
         cout << "Nhap mat khau: "; cin >> password;
     }
     string otp = sinhOTP();
-    // Gui OTP den email
+
+    // Gui OTP den email //
     cout << "Dang gui OTP dang ky toi email " << email << "...\n";
     if (!sendOTP(email, otp)) {
         cout << "Khong the gui OTP. Vui long thu lai.\n";
@@ -263,7 +263,8 @@ void dangKy(bool byManager = false) {
     }
     cout << "Nhap ma OTP: "; string entered; cin >> entered;
     if (entered != otp) { cout << "OTP khong hop le! Dang ky that bai.\n"; return; }
-    // =============================================================
+    // ============================================================= //
+
     int wid = wallets.size();
     users[username] = User(username, hashPassword(password), fullName, email, wid, byManager);
     wallets[wid] = Wallet(wid);
@@ -276,16 +277,20 @@ bool dangNhap(string &loggedUser) {
     string username, password;
     cout << "Nhap ten dang nhap: "; cin >> username;
     cout << "Nhap mat khau: "; cin >> password;
+
     // Dang nhap duoi quyen admin thi khong can OTP
     if (username == "admin" && password == "admin@123") {
         loggedUser = username;
-        cout << "Dang nhap admin thanh cong (khong can OTP)!\n";
+        cout << "Dang nhap duoi quyen admin thanh cong.\n";
         return true;
     }
+    // ============================================================= //
+
     if (!users.count(username) || users[username].passwordHash != hashPassword(password)) {
         cout << "Sai ten hoac mat khau!\n"; return false; }
     string otp = sinhOTP();
-    // Gui OTP den email
+
+    // Gui OTP den email //
     cout << "Dang gui OTP dang nhap toi email " << users[username].email << "...\n";
     if (!sendOTP(users[username].email, otp)) {
         cout << "Khong the gui OTP. Vui long thu lai.\n";
@@ -293,7 +298,8 @@ bool dangNhap(string &loggedUser) {
     }
     cout << "Nhap ma OTP: "; string entered; cin >> entered;
     if (entered != otp) { cout << "OTP khong hop le! Dang nhap that bai.\n"; return false; }
-    // =============================================================
+    // ============================================================= //
+
     loggedUser = username;
     cout << "Dang nhap thanh cong!\n";
     return true;
@@ -345,7 +351,7 @@ void capNhatThongTin(string &username) {
     auto it = users.find(username);
     if (it == users.end()) return;
 
-    // A. Gui OTP xac thuc truoc khi cap nhat
+    // Gui OTP xac thuc truoc khi cap nhat
     string initOtp = sinhOTP();
     cout << "Dang gui OTP xac thuc cap nhat thong tin toi email hien tai "
          << it->second.email << "...\n";
@@ -360,7 +366,7 @@ void capNhatThongTin(string &username) {
         cout << "OTP khong hop le. Huy cap nhat.\n";
         return;
     }
-    // 1. Nhap thong tin moi (bo trong neu khong doi)
+    // Nhap thong tin moi (bo trong neu khong doi)
     string newPassword, newName, newEmail;
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cout << "Nhap mat khau moi (bo trong neu khong doi): ";
@@ -370,14 +376,14 @@ void capNhatThongTin(string &username) {
     cout << "Nhap email moi (bo trong neu khong doi): ";
     getline(cin, newEmail);
 
-    // 2. Hien thi tom tat thay doi
+    // Hien thi tom tat thay doi
     cout << "\n--- Xac nhan thay doi ---\n";
     if (!newPassword.empty()) cout << "   Password: ********\n";
     if (!newName.empty())     cout << "   Ho ten: "    << newName     << "\n";
     if (!newEmail.empty())    cout << "   Email: "     << newEmail    << "\n";
     cout << "------------------------\n";
 
-    // 3. Neu doi email, gui OTP thang den email moi
+    // Neu doi email, gui OTP thang den email moi
     if (!newEmail.empty()) {
         string otp = sinhOTP();
         cout << "Dang gui OTP den email moi " << newEmail << "...\n";
@@ -393,7 +399,7 @@ void capNhatThongTin(string &username) {
         }
     }
 
-    // 4. Cap nhat vao struct User
+    // Cap nhat vao struct User
     User updated = it->second;
     if (!newPassword.empty()) {
         updated.passwordHash   = hashPassword(newPassword);
@@ -401,32 +407,30 @@ void capNhatThongTin(string &username) {
     }
     if (!newName.empty())     updated.fullName = newName;
     if (!newEmail.empty())    updated.email    = newEmail;
-
-    // 5. Dua ve map, neu doi username thi cap nhat key va bien dang nhap
+    
         it->second = move(updated);
-
 
     luuDuLieu();
     cout << "Cap nhat thong tin thanh cong!\n";
 }
 
-
 // Cap nhat thong tin boi quan ly 
 void capNhatThongTinBoiQuanLy(const string& manager, const string& targetUser) {
-    // 1. Kiem tra quyen quan ly
+
+    // Kiem tra quyen quan ly
     if (!users[manager].isManager) {
         cout << "Chi quan ly moi co the cap nhat thong tin!\n";
         return;
     }
 
-    // 2. Tim nguoi dung muc tieu
+    // Tim nguoi dung muc tieu
     auto it = users.find(targetUser);
     if (it == users.end()) {
         cout << "Nguoi dung \"" << targetUser << "\" khong ton tai!\n";
         return;
     }
 
-    // 3. Nhap thong tin moi (bo trong neu khong doi)
+    // Nhap thong tin moi (bo trong neu khong doi)
     string newPassword, newName, newEmail;
     cin.ignore(numeric_limits<streamsize>::max(), '\n'); // don dong truoc
     cout << "Nhap mat khau moi cho " << targetUser << " (bo trong neu khong doi): ";
@@ -436,14 +440,14 @@ void capNhatThongTinBoiQuanLy(const string& manager, const string& targetUser) {
     cout << "Nhap email moi cho " << targetUser << " (bo trong neu khong doi): ";
     getline(cin, newEmail);
 
-    // 4. Hien thi ban tom tat cac thay doi
+    // Hien thi ban tom tat cac thay doi
     cout << "\n--- Xac nhan thay doi cho " << targetUser << " ---\n";
     if (!newPassword.empty()) cout << "   Mat khau: ********\n";
     if (!newName.empty())     cout << "   Ho ten: "     << newName     << "\n";
     if (!newEmail.empty())    cout << "   Email: "      << newEmail    << "\n";
     cout << "-------------------------------------\n";
 
-    // 5. Neu thay doi email, gui va xac thuc OTP den EMAIL MOI
+    // Neu thay doi email, gui va xac thuc OTP den EMAIL MOI
     if (!newEmail.empty()) {
         string otp = sinhOTP();
         cout << "Dang gui OTP den email moi " << newEmail << "...\n";
@@ -459,25 +463,27 @@ void capNhatThongTinBoiQuanLy(const string& manager, const string& targetUser) {
             return;
         }
     }
-    // 6. Ap dung thay doi
+    // Ap dung thay doi
     User updated = it->second;
-    // – Doi password
+
+    // Doi mat khau
     if (!newPassword.empty()) {
         updated.passwordHash   = hashPassword(newPassword);
         updated.isAutoGenerated = false;
     }
-    // – Doi ho ten
+
+    // Doi ho ten
     if (!newName.empty()) {
         updated.fullName = newName;
     }
-    // – Doi email
+
+    // Doi email
     if (!newEmail.empty()) {
         updated.email = newEmail;
     }
-
         it->second = move(updated);
 
-    // 8. Luu file va thong bao
+    // Luu file va thong bao
     luuDuLieu();
     cout << "Cap nhat thong tin nguoi dung thanh cong!\n";
 }
