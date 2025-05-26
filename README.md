@@ -48,7 +48,7 @@ thông qua xác thực OTP và mã hóa mật khẩu cơ bản.
    - Quản lý có thể đăng ký tài khoản với mật khẩu tự sinh.
 
 2. **Đăng nhập**: 
-   - Kiểm tra tên đăng nhập và mật khẩu, cho phép truy cập hệ thống. 
+   - Nhập tên đăng nhập, email, mật khẩu và xác thực OTP để đăng nhập.
    - Tài khoản tự sinh yêu cầu đổi mật khẩu lần đầu.
 
 3. **Nạp điểm**: 
@@ -61,8 +61,8 @@ thông qua xác thực OTP và mã hóa mật khẩu cơ bản.
    - Thay đổi mật khẩu sau khi xác thực OTP.
 
 6. **Cập nhật thông tin**: 
-   - Cập nhật họ tên và email, yêu cầu OTP. 
-   - Quản lý có thể cập nhật thông tin người dùng khác với OTP xác nhận từ người đó.
+   - Cập nhật họ tên và email, yêu cầu xác thực OTP. 
+   - Quản lý có thể cập nhật tất cả thông tin của người với OTP xác nhận từ người đó.
 
 7. **Xem báo cáo ví**: 
    - Hiển thị số dư, giá trị quy đổi (đô la) và lịch sử giao dịch của ví.
@@ -75,13 +75,6 @@ thông qua xác thực OTP và mã hóa mật khẩu cơ bản.
 
 10. **Xác thực OTP**: 
     - Tạo mã OTP 6 chữ số để bảo mật đăng ký, giao dịch, và cập nhật thông tin.
-
-### Cấu trúc file dữ liệu
-
-- **users.txt**: Lưu thông tin người dùng (tên đăng nhập, mật khẩu mã hóa, họ tên, email, ID ví, trạng thái quản lý, trạng thái tự sinh).
-- **wallets.txt**: Lưu thông tin ví (ID ví, số dư, lịch sử giao dịch).
-- **backup_users.txt**: Sao lưu dữ liệu người dùng.
-- **backup_wallets.txt**: Sao lưu dữ liệu ví.
 
 ## IV. Hướng dẫn tải và biên dịch chương trình
 
@@ -127,9 +120,10 @@ Baitaplon.exe
 ## Cấu hình Email
 
 ### Thiết lập Gmail SMTP
-1. Bật **2-Step Verification** trong tài khoản Gmail
-2. Tạo **App Password** cho ứng dụng
-3. Cập nhật thông tin trong mã nguồn:
+1. Vào Google Account → Security
+2. Bật **2-Step Verification** trong tài khoản Gmail
+3. Tạo **App Password** cho ứng dụng
+4. Cập nhật thông tin trong mã nguồn:
 
 ```cpp
 const string from = "your-email@gmail.com";  // Email của bạn
@@ -142,20 +136,14 @@ const string pass = "your-app-password";     // App Password
 curl_easy_setopt(curl, CURLOPT_URL, "smtps://smtp.your-provider.com:465");
 ```
 
-### ⚠️ Lưu ý quan trọng
+### Lưu ý quan trọng
 Trong mã nguồn, bạn **BẮT BUỘC** phải thay đổi thông tin email và mật khẩu ứng dụng Gmail:
 
 ```cpp
 const string from = "your-email@gmail.com";  // Thay bằng email của bạn
 const string pass = "your-app-password";     // Thay bằng mật khẩu ứng dụng Gmail
 ```
-
-**Để tạo mật khẩu ứng dụng Gmail:**
-1. Vào Google Account → Security
-2. Bật 2-Step Verification  
-3. Tạo App passwords
-
-## Sử dụng
+## Chú ý
 
 ### Thông tin tài khoản Admin mặc định
 - **Tên đăng nhập**: `admin`
@@ -171,11 +159,18 @@ Chương trình tự động tạo và quản lý các file:
 - `backup_users.txt`: File sao lưu người dùng
 - `backup_wallets.txt`: File sao lưu ví
 
-### Lưu ý bảo mật quan trọng
-- **Xác thực 2FA**: Tất cả giao dịch quan trọng đều yêu cầu OTP
-- **Mã hóa mật khẩu**: Mật khẩu được hash với salt trước khi lưu
-- **Sao lưu tự động**: Hệ thống tự động tạo backup sau mỗi thay đổi
-- **Email hợp lệ**: Email phải chính xác để nhận OTP
+### Lưu ý bảo mật:
+- Tất cả giao dịch quan trọng đều yêu cầu xác thực OTP
+- Mật khẩu được mã hóa trước khi lưu trữ
+- Hệ thống tự động sao lưu dữ liệu
+- Email phải hợp lệ để nhận OTP
+
+## Xử lý lỗi thường gặp:
+- **"Khong the gui OTP"**: Kiểm tra kết nối internet và cấu hình email
+- **"OTP khong hop le"**: Kiểm tra mã OTP trong email (có thể nằm trong spam)
+- **"Nguoi dung da ton tai"**: Chọn tên đăng nhập khác
+- **"So du khong du"**: Nạp thêm điểm trước khi chuyển
+- **"File khong tim thay"**: Chương trình sẽ tự tạo file mới hoặc dùng backup
 
 ## V. Hướng dẫn sử dụng chương trình
 
@@ -199,6 +194,8 @@ Khi chạy chương trình, bạn sẽ thấy menu với các lựa chọn:
 
 ### Hướng dẫn từng chức năng:
 
+Khi khởi chạy chương trình, hệ thống tải dữ liệu từ users.txt và wallets.txt. Menu chính hiển thị các tùy chọn sau:
+
 #### 1. Đăng ký tài khoản (Lựa chọn 1):
 - Nhập tên đăng nhập (không được trùng)
 - Nhập họ tên đầy đủ
@@ -210,8 +207,8 @@ Khi chạy chương trình, bạn sẽ thấy menu với các lựa chọn:
 #### 2. Đăng nhập (Lựa chọn 2):
 - Nhập tên đăng nhập
 - Nhập mật khẩu
-- **Lưu ý**: Tài khoản admin mặc định: `admin/admin@123` (không cần OTP)
 - Với tài khoản thường: hệ thống gửi OTP đến email để xác thực
+- Với tài khoản admin mặc định: thì không cần OTP.
 
 #### 3. Đổi mật khẩu (Lựa chọn 3):
 - **Yêu cầu**: Phải đăng nhập trước
@@ -221,7 +218,7 @@ Khi chạy chương trình, bạn sẽ thấy menu với các lựa chọn:
 #### 4. Cập nhật thông tin cá nhân (Lựa chọn 4):
 - **Yêu cầu**: Phải đăng nhập trước
 - Hệ thống gửi OTP đến email hiện tại
-- Nhập OTP, sau đó nhập họ tên mới và email mới
+- Nhập OTP, sau đó nhập họ tên mới, email mới.
 
 #### 5. Chuyển điểm (Lựa chọn 5):
 - **Yêu cầu**: Phải đăng nhập trước
@@ -234,7 +231,6 @@ Khi chạy chương trình, bạn sẽ thấy menu với các lựa chọn:
 - Hiển thị:
   - ID ví
   - Số dư hiện tại (điểm và tương đương USD)
-  - Lịch sử giao dịch chi tiết
 
 #### 7. Đăng ký bởi quản lý (Lựa chọn 7):
 - **Yêu cầu**: Phải đăng nhập với tài khoản quản lý
@@ -263,79 +259,7 @@ Khi chạy chương trình, bạn sẽ thấy menu với các lựa chọn:
 - Tạo file backup
 - Kết thúc chương trình
 
-### Thông tin tài khoản mặc định:
-- **Tên đăng nhập**: admin
-- **Mật khẩu**: admin@123
-- **Quyền**: Quản trị viên
-- **Số dư khởi tạo**: 10,000 điểm
-
-### Cấu trúc dữ liệu:
-Chương trình tự động tạo và quản lý các file:
-- `users.txt`: Lưu thông tin người dùng
-- `wallets.txt`: Lưu thông tin ví và giao dịch
-- `backup_users.txt`: File sao lưu người dùng
-- `backup_wallets.txt`: File sao lưu ví
-
-### Lưu ý bảo mật:
-- Tất cả giao dịch quan trọng đều yêu cầu xác thực OTP
-- Mật khẩu được mã hóa trước khi lưu trữ
-- Hệ thống tự động sao lưu dữ liệu
-- Email phải hợp lệ để nhận OTP
-
-### Xử lý lỗi thường gặp:
-- **"Khong the gui OTP"**: Kiểm tra kết nối internet và cấu hình email
-- **"OTP khong hop le"**: Kiểm tra mã OTP trong email (có thể nằm trong spam)
-- **"Nguoi dung da ton tai"**: Chọn tên đăng nhập khác
-- **"So du khong du"**: Nạp thêm điểm trước khi chuyển
-- **"File khong tim thay"**: Chương trình sẽ tự tạo file mới hoặc dùng backup
-
-## VI. Mô tả chi tiết cách chương trình hoạt động
-
-Khi khởi chạy chương trình, hệ thống tải dữ liệu từ users.txt và wallets.txt. Nếu không có dữ liệu, hệ thống tạo tài khoản quản trị mặc
-định (admin, mật khẩu: admin@123, ví ID: 0, số dư: 10,000 điểm). Menu chính hiển thị các tùy chọn sau:
-
-1. **Đăng ký tài khoản**:
-   - Người dùng nhập tên đăng nhập, họ tên, email, và mật khẩu.
-   - Hệ thống tạo mã OTP 6 chữ số ngẫu nhiên và yêu cầu người dùng nhập để xác thực.
-   - Quản lý có thể đăng ký tài khoản với mật khẩu tự sinh, được đánh dấu là tài khoản tự sinh.
-   - Thông tin được lưu vào users.txt, ví mới được tạo và lưu vào wallets.txt.
-
-2. **Đăng nhập hệ thống**:
-   - Nhập tên đăng nhập và mật khẩu. Mật khẩu được mã hóa và so sánh với dữ liệu lưu trữ.
-   - Nếu là tài khoản tự sinh, yêu cầu đổi mật khẩu ngay lần đăng nhập đầu.
-   - Nếu thông tin sai, báo lỗi.
-
-3. **Sau khi đăng nhập**, menu cung cấp các lựa chọn:
-   - **Nạp điểm**:
-     - Người dùng nhập số tiền
-     - Xác thực OTP để hoàn tất.
-     - Điểm được cộng vào ví, lịch sử giao dịch cập nhật trong wallets.txt.
-
-   - **Chuyển điểm**:
-     - Nhập tên tài khoản người nhận và số điểm.
-     - Kiểm tra số dư, yêu cầu xác thực OTP.
-     - Trừ điểm từ ví người gửi, cộng điểm cho người nhận, cập nhật lịch sử giao dịch.
-
-   - **Đổi mật khẩu**:
-     - Yêu cầu xác thực OTP, nhập mật khẩu mới.
-     - Mật khẩu được mã hóa và cập nhật trong users.txt.
-
-   - **Cập nhật thông tin**:
-     - Cập nhật họ tên và email, yêu cầu xác thực OTP.
-     - Quản lý có thể cập nhật thông tin người dùng khác, yêu cầu OTP từ người đó.
-     - Dữ liệu được lưu vào users.txt.
-
-   - **Xem báo cáo ví**:
-     - Hiển thị ID ví, số dư (điểm và đô la tương đương), và lịch sử giao dịch.
-
-   - **Xem danh sách người dùng** (chỉ quản lý):
-     - Hiển thị thông tin tất cả người dùng: tên đăng nhập, họ tên, email, ID ví, trạng thái quản lý.
-
-   - **Thoát chương trình**:
-     - Lưu toàn bộ dữ liệu vào users.txt, wallets.txt.
-     - Tạo bản sao lưu vào backup_users.txt, backup_wallets.txt bằng lệnh hệ thống (copy trên Windows, cp trên Unix).
-
-## VII. Sơ đồ mô tả cách chương trình hoạt động
+## VI. Sơ đồ mô tả cách chương trình hoạt động
 
 ```
                     +-------------------+
@@ -379,62 +303,39 @@ Khi khởi chạy chương trình, hệ thống tải dữ liệu từ users.txt
                                                          +-------+
 ```
 
-## VIII. Tài liệu tham khảo
+## VII. Tài liệu tham khảo
 
 ### A. Tài liệu về ngôn ngữ lập trình C++
-- **C++ Reference Documentation**: [cppreference.com](https://en.cppreference.com/w/) - Tài liệu tham khảo đầy đủ về C++
-- **The C++ Programming Language**: Bjarne Stroustrup - Sách chính thức về C++ từ tác giả ngôn ngữ
-- **Effective C++**: Scott Meyers - Hướng dẫn viết code C++ hiệu quả
-- **C++ Primer**: Stanley Lippman, Josée Lajoie, Barbara Moo - Sách học C++ từ cơ bản đến nâng cao
-- **GeeksforGeeks C++**: [geeksforgeeks.org/cpp-programming-language](https://www.geeksforgeeks.org/cpp-programming-language/) - Hướng dẫn và ví dụ C++
-- **Cplusplus.com**: [cplusplus.com](https://www.cplusplus.com/) - Tài liệu và hướng dẫn C++
+- **C++ Reference**: [cppreference.com](https://en.cppreference.com/w/) - Tài liệu tham khảo cú pháp C++
+- **GeeksforGeeks C++**: [geeksforgeeks.org/cpp-programming-language](https://www.geeksforgeeks.org/cpp-programming-language/) - Hướng dẫn và ví dụ C++ cơ bản
+- **Cplusplus.com**: [cplusplus.com](https://www.cplusplus.com/) - Hướng dẫn C++ từ cơ bản đến nâng cao
 
-### B. Tài liệu về thư viện và API
+### B. Thư viện sử dụng trong dự án
 - **libcurl Documentation**: [curl.se/libcurl](https://curl.se/libcurl/) - Tài liệu chính thức của thư viện libcurl
 - **CURL Programming Tutorial**: [curl.se/libcurl/c](https://curl.se/libcurl/c/) - Hướng dẫn lập trình với libcurl
 - **C++ Standard Library Reference**: [cplusplus.com/reference](https://cplusplus.com/reference/) - Tài liệu thư viện chuẩn C++
-- **File I/O in C++**: [cplusplus.com/doc/tutorial/files](https://cplusplus.com/doc/tutorial/files/) - Hướng dẫn xử lý file
 
-### C. Tài liệu về bảo mật và mã hóa
-- **Cryptography Engineering**: Niels Ferguson, Bruce Schneier, Tadayoshi Kohno - Thiết kế hệ thống mật mã
-- **Hash Functions and Security**: [nist.gov](https://www.nist.gov/publications) - Tài liệu về hàm băm từ NIST
+### C. Kiến thức về bảo mật cơ bản
+- **Hash Functions**: Tìm hiểu về hàm băm để mã hóa mật khẩu
+- **OTP (One-Time Password)**: Khái niệm mã xác thực một lần
 
-### D. Tài liệu về email và SMTP
-- **SMTP Protocol RFC 5321**: [tools.ietf.org/rfc/rfc5321.txt](https://tools.ietf.org/rfc/rfc5321.txt) - Giao thức SMTP chính thức
-- **Gmail API Documentation**: [developers.google.com/gmail/api](https://developers.google.com/gmail/api) - Tài liệu Gmail API
-- **Email Security Best Practices**: [mailgun.com/blog/email-security](https://www.mailgun.com/blog/email-security/) - Bảo mật email
-- **MIME Types RFC 2046**: [tools.ietf.org/rfc/rfc2046.txt](https://tools.ietf.org/rfc/rfc2046.txt) - Định dạng email MIME
-
-### E. Tài liệu về quản lý dữ liệu và file
-- **File System Design**: Operating System Concepts - Abraham Silberschatz - Quản lý hệ thống file
-- **Data Structures and Algorithms in C++**: Michael Goodrich - Cấu trúc dữ liệu
+### D. Xử lý file và dữ liệu
+- **File I/O in C++**: [cplusplus.com/doc/tutorial/files](https://cplusplus.com/doc/tutorial/files/) - Đọc/ghi file trong C++
+- **String Processing**: Xử lý chuỗi và phân tách dữ liệu
 - **JSON for Modern C++**: [github.com/nlohmann/json](https://github.com/nlohmann/json) - Thư viện JSON cho C++
 
-### F. Tài liệu về OTP và xác thực hai yếu tố
-- **RFC 4226 - HOTP Algorithm**: [tools.ietf.org/rfc/rfc4226.txt](https://tools.ietf.org/rfc/rfc4226.txt) - Thuật toán HOTP
-- **RFC 6238 - TOTP Algorithm**: [tools.ietf.org/rfc/rfc6238.txt](https://tools.ietf.org/rfc/rfc6238.txt) - Thuật toán TOTP
-- **Two-Factor Authentication**: David Aspinall, Mike Just - Xác thực hai yếu tố
+### E. Tài liệu về email và SMTP
+- **SMTP Protocol RFC 5321**: [tools.ietf.org/rfc/rfc5321.txt](https://tools.ietf.org/rfc/rfc5321.txt) - Giao thức SMTP chính thức
+- **Gmail API Documentation**: [developers.google.com/gmail/api](https://developers.google.com/gmail/api) - Tài liệu Gmail API
 
-### G. Tài liệu về hệ thống thanh toán điện tử
-- **Digital Payment Systems**: Donal O'Mahony, Michael Peirce, Hitesh Tewari - Hệ thống thanh toán số
-- **Payment Card Industry Data Security Standard (PCI DSS)**: [pcisecuritystandards.org](https://www.pcisecuritystandards.org/) - Tiêu chuẩn bảo mật thanh toán
-
-### H. Diễn đàn và cộng đồng
+### F. Cộng đồng hỗ trợ
 - **Stack Overflow**: [stackoverflow.com](https://stackoverflow.com/) - Diễn đàn hỏi đáp lập trình
 - **Reddit r/cpp**: [reddit.com/r/cpp](https://www.reddit.com/r/cpp/) - Cộng đồng C++
 - **C++ Users Group**: [isocpp.org](https://isocpp.org/) - Tổ chức tiêu chuẩn C++
 - **GitHub**: [github.com](https://github.com/) - Kho mã nguồn mở
 - **Dev.to C++ Community**: [dev.to/t/cpp](https://dev.to/t/cpp) - Cộng đồng chia sẻ kiến thức
 
-### I. Công cụ phát triển
-- **Visual Studio Code**: [code.visualstudio.com](https://code.visualstudio.com/) - IDE miễn phí
-- **Code::Blocks**: [codeblocks.org](https://www.codeblocks.org/) - IDE C++ miễn phí
-- **CLion**: [jetbrains.com/clion](https://www.jetbrains.com/clion/) - IDE C++ chuyên nghiệp
-- **GDB Documentation**: [gnu.org/software/gdb](https://www.gnu.org/software/gdb/) - GNU Debugger
-- **CMake**: [cmake.org](https://cmake.org/) - Hệ thống build cross-platform
-
-### J. Tài liệu về deployment và quản lý môi trường
-- **MSYS2 Documentation**: [msys2.org](https://www.msys2.org/) - Môi trường phát triển Windows
-- **MinGW-w64**: [mingw-w64.org](https://www.mingw-w64.org/) - Trình biên dịch Windows
-- **Docker for C++**: [docker.com](https://www.docker.com/) - Container hóa ứng dụng
-
+### G. Công cụ phát triển
+- **Visual Studio Code**: [code.visualstudio.com](https://code.visualstudio.com/) - Trình soạn thảo code miễn phí
+- **MSYS2**: [msys2.org](https://www.msys2.org/) - Môi trường biên dịch trên Windows
+- **MinGW-w64**: Trình biên dịch C++ cho Windows
