@@ -110,7 +110,6 @@ bool sendOTP(const string &to, const string &otp) {
     return (res == CURLE_OK);
 }
 
-
 // Luu du lieu vao file (dang van ban)
 void luuDuLieu() {
     ofstream userFile("users.txt");
