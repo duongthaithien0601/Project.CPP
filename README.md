@@ -143,6 +143,7 @@ Trong mã nguồn, bạn **BẮT BUỘC** phải thay đổi thông tin email v�
 const string from = "your-email@gmail.com";  // Thay bằng email của bạn
 const string pass = "your-app-password";     // Thay bằng mật khẩu ứng dụng Gmail
 ```
+
 ## Chú ý
 
 ### Thông tin tài khoản Admin mặc định
@@ -268,9 +269,9 @@ Khi khởi chạy chương trình, hệ thống tải dữ liệu từ users.txt
                               |
                               v
                     +-------------------+
-                    |  Tải dữ liệu từ   |
-                    |  users.txt và     |
-                    |  wallets.txt      |
+                    |   Tải dữ liệu từ  |
+                    |   users.txt và    |
+                    |   wallets.txt     |
                     +-------------------+
                               |
                               v
