@@ -247,6 +247,12 @@ void dangKy(bool byManager = false) {
     if (users.count(username)) { cout << "Nguoi dung da ton tai!\n"; return; }
     cin.ignore(); cout << "Nhap ho ten: "; getline(cin, fullName);
     cout << "Nhap email: "; cin >> email;
+    // check xem email da ton tai chua
+    for (const auto& kv : users) {
+        if (kv.second.email == email) {
+            cout << "Email da duoc dang ky! Vui long su dung email khac.\n";
+            return;
+        }}
     if (byManager) {
         password = sinhOTP();
         cout << "Mat khau tu sinh: " << password << "\n";
