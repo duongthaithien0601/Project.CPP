@@ -4,20 +4,19 @@
     {
       "label": "Build C++ + libcurl",
       "type": "shell",
-      // Dùng g++ có sẵn trong MSYS2
+      // Dung g++ trong MSYS2
       "command": "C:/msys64/mingw64/bin/g++.exe",
       "args": [
         // source file
         "${workspaceFolder}/Baitaplon.cpp",
-        // đặt tên exe
+        // dat ten exe
         "-o", "Baitaplon.exe",
-        // đường dẫn include và lib của curl
+        // duong dan include và lib của curl
         "-I", "C:/msys64/mingw64/include",
         "-L", "C:/msys64/mingw64/lib",
         "-lcurl"
       ],
       "options": {
-        // chạy lệnh ở thư mục projecttest
         "cwd": "${workspaceFolder}"
       },
       "group": {
