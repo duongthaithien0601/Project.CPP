@@ -46,17 +46,6 @@ string hashPassword(string password) {
     return to_string(hasher(password + salt));
 }
 
-// Sinh mat khau ngau nhien
-string sinhMatKhauNgauNhien() {
-    string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    string pwd;
-    srand(time(0));
-    for (int i = 0; i < 8; i++) {
-        pwd += chars[rand() % chars.size()];
-    }
-    return pwd;
-}
-
 // Sinh OTP
 string sinhOTP() {
     srand(time(0));
